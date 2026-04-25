@@ -10,19 +10,19 @@ This application is for machines where the same remote paths are mounted repeate
 
 ## Features
 
-Named mount targets
-Makefile-based command backend
-Simple CLI wrapper
-Local override config model
-Clean git workflow for infrastructure tooling
+- Named mount targets
+- Makefile-based command backend
+- Simple CLI wrapper
+- Local override config model
+- Clean git workflow for infrastructure tooling
 
 ## Roadmap
 
-Support multiple servers and per-target SSH aliases
-Add read-only target support
-Add batch mount and unmount operations
-Add prerequisite checks for sshfs and fusermount
-Optional systemd user integration
+- Support multiple servers and per-target SSH aliases
+- Add read-only target support
+- Add batch mount and unmount operations
+- Add prerequisite checks for sshfs and fusermount
+- Optional systemd user integration
 
 ## Project structure
 
@@ -101,32 +101,17 @@ Or use the wrapper:
 bin/mountfs mount web
 ```
 
-## Recommended lab placement
+## Optional: add to your PATH
 
-One useful local layout is:
+If you want to run `mountfs` from anywhere, you can add it to your PATH.
 
-```text
-~/lab/
-├── bin/
-└── infra/
-    └── sshfs-control/
-```
-
-Expose the wrapper globally:
+Example:
 
 ```bash
-ln -sf ~/lab/infra/sshfs-control/bin/mountfs ~/lab/bin/mountfs
+ln -s /path/to/sshfs-control/bin/mountfs ~/.local/bin/mountfs
 ```
 
-Then use:
-
-```bash
-mountfs mount web
-mountfs status web
-mountfs unmount web
-```
-
-Make sure `~/lab/bin` is in your `PATH`.
+Make sure the destination directory is in your PATH.
 
 ## Configuration
 
