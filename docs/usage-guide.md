@@ -115,6 +115,12 @@ Use the target:
 bin/mountfs mount logs
 ```
 
+Example read-only target:
+
+    SSHFS_OPTS_web := $(SSHFS_OPTS),ro
+
+This makes the `web` mount read-only.
+
 ## Using ~/lab/bin
 
 One useful placement:

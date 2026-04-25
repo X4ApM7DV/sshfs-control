@@ -144,6 +144,8 @@ config/mounts.local.mk
 
 Keep real hostnames, usernames and personal filesystem paths in the ignored local file.
 
+You can define per-target SSHFS options using `SSHFS_OPTS_<target>`.
+
 ## Example commands
 
 ```bash

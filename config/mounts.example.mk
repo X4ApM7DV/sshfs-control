@@ -16,6 +16,8 @@ SSHFS_OPTS ?= reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,StrictHostK
 
 REMOTE_PATH_web ?= /srv/www/example.com/
 LOCAL_DIR_web ?= $(LOCAL_BASE)/web
+SSHFS_OPTS_web ?= $(SSHFS_OPTS)
 
 REMOTE_PATH_home ?= /home/deploy/
 LOCAL_DIR_home ?= $(LOCAL_BASE)/home
+SSHFS_OPTS_home ?= $(SSHFS_OPTS)

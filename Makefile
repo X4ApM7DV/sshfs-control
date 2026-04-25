@@ -13,6 +13,7 @@ include $(CONFIG_EXAMPLE)
 
 REMOTE_PATH := $(REMOTE_PATH_$(TARGET))
 LOCAL_DIR := $(LOCAL_DIR_$(TARGET))
+TARGET_SSHFS_OPTS := $(or $(SSHFS_OPTS_$(TARGET)),$(SSHFS_OPTS))
 TARGETS := $(strip $(TARGETS))
 
 .PHONY: help list-targets check-tools check-target print-config mount unmount remount status ls doctor
@@ -55,7 +56,7 @@ print-config: check-target
 	@echo "REMOTE_USER=$(REMOTE_USER)"
 	@echo "REMOTE_PATH=$(REMOTE_PATH)"
 	@echo "LOCAL_DIR=$(LOCAL_DIR)"
-	@echo "SSHFS_OPTS=$(SSHFS_OPTS)"
+	@echo "TARGET_SSHFS_OPTS=$(TARGET_SSHFS_OPTS)"
 
 mount: check-tools check-target
 	@echo "Ensuring mount point exists: $(LOCAL_DIR)"
@@ -64,7 +65,7 @@ mount: check-tools check-target
 		echo "Already mounted: $(LOCAL_DIR)"; \
 	else \
 		echo "Mounting $(REMOTE_USER)@$(REMOTE_SERVER):$(REMOTE_PATH) -> $(LOCAL_DIR)"; \
-		sshfs -o "$(SSHFS_OPTS)" "$(REMOTE_USER)@$(REMOTE_SERVER):$(REMOTE_PATH)" "$(LOCAL_DIR)"; \
+		sshfs -o "$(TARGET_SSHFS_OPTS)" "$(REMOTE_USER)@$(REMOTE_SERVER):$(REMOTE_PATH)" "$(LOCAL_DIR)"; \
 		if mountpoint -q "$(LOCAL_DIR)"; then \
 			echo "Mounted OK: $(LOCAL_DIR)"; \
 		else \
