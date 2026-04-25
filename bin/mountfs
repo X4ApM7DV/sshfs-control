@@ -42,7 +42,7 @@ case "$COMMAND" in
   list|list-targets) make -C "$PROJECT" --no-print-directory list-targets ;;
   doctor) make -C "$PROJECT" --no-print-directory doctor ;;
   config|print-config) make -C "$PROJECT" --no-print-directory print-config TARGET="$TARGET" ;;
-  mount|unmount|remount|status|ls) make -C "$PROJECT" --no-print-directory "$COMMAND" TARGET="$TARGET" ;;
+  mount|unmount|remount|status|ls|mount-all|unmount-all) make -C "$PROJECT" --no-print-directory "$COMMAND" TARGET="$TARGET" ;;
   *)
     echo "Unknown command: $COMMAND"
     echo ""

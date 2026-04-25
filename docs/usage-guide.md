@@ -92,6 +92,22 @@ make remount TARGET=web
 bin/mountfs remount web
 ```
 
+## Batch operations
+
+Mount or unmount all configured targets:
+
+```bash
+make mount-all
+make unmount-all
+```
+
+Using the wrapper:
+
+```bash
+bin/mountfs mount-all
+bin/mountfs unmount-all
+```
+
 ## Adding a new target
 
 Edit `config/mounts.local.mk`.
@@ -117,38 +133,11 @@ bin/mountfs mount logs
 
 Example read-only target:
 
-    SSHFS_OPTS_web := $(SSHFS_OPTS),ro
+```bash
+SSHFS_OPTS_web := $(SSHFS_OPTS),ro
+```
 
 This makes the `web` mount read-only.
-
-## Using ~/lab/bin
-
-One useful placement:
-
-```text
-~/lab/infra/sshfs-control
-```
-
-Symlink the wrapper:
-
-```bash
-ln -sf ~/lab/infra/sshfs-control/bin/mountfs ~/lab/bin/mountfs
-```
-
-Confirm `~/lab/bin` is in your `PATH`:
-
-```bash
-echo "$PATH"
-```
-
-Then run:
-
-```bash
-mountfs list
-mountfs mount web
-mountfs status web
-mountfs unmount web
-```
 
 ## Troubleshooting
 

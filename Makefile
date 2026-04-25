@@ -16,7 +16,7 @@ LOCAL_DIR := $(LOCAL_DIR_$(TARGET))
 TARGET_SSHFS_OPTS := $(or $(SSHFS_OPTS_$(TARGET)),$(SSHFS_OPTS))
 TARGETS := $(strip $(TARGETS))
 
-.PHONY: help list-targets check-tools check-target print-config mount unmount remount status ls doctor
+.PHONY: help list-targets check-tools check-target print-config mount unmount remount status ls doctor mount-all unmount-all
 
 help:
 	@echo "sshfs-control"
@@ -30,6 +30,8 @@ help:
 	@echo "  make unmount TARGET=web"
 	@echo "  make remount TARGET=web"
 	@echo "  make doctor"
+	@echo " make mount-all"
+	@echo " make unmount-all"
 
 list-targets:
 	@echo "Available targets:"
@@ -114,3 +116,17 @@ doctor: check-tools
 		echo "Create it with: cp $(CONFIG_EXAMPLE) $(CONFIG_LOCAL)"; \
 	fi
 	@$(MAKE) --no-print-directory list-targets
+
+mount-all:
+	@for target in $(TARGETS); do \
+		echo ""; \
+		echo "==> Mounting $$target"; \
+		$(MAKE) --no-print-directory mount TARGET="$$target"; \
+	done
+
+unmount-all:
+	@for target in $(TARGETS); do \
+		echo ""; \
+		echo "==> Unmounting $$target"; \
+		$(MAKE) --no-print-directory unmount TARGET="$$target"; \
+	done
