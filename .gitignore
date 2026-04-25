@@ -1,0 +1,7 @@
+config/mounts.local.mk
+.env
+*.local
+*.log
+*.swp
+tmp/
+.cache/

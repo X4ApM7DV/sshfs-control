@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+LAB_ROOT="${LAB_ROOT:-$HOME/lab}"
+DEFAULT_PROJECT="$LAB_ROOT/infra/sshfs-control"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_FROM_SCRIPT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [[ -f "$REPO_FROM_SCRIPT/Makefile" ]]; then
+  PROJECT="$REPO_FROM_SCRIPT"
+else
+  PROJECT="${SSHFS_CONTROL_HOME:-$DEFAULT_PROJECT}"
+fi
+
+usage() {
+  cat <<'USAGE'
+mountfs - operator wrapper for sshfs-control
+
+Usage:
+  mountfs list
+  mountfs doctor
+  mountfs config <target>
+  mountfs mount <target>
+  mountfs unmount <target>
+  mountfs remount <target>
+  mountfs status <target>
+  mountfs ls <target>
+USAGE
+}
+
+if [[ ! -d "$PROJECT" || ! -f "$PROJECT/Makefile" ]]; then
+  echo "sshfs-control project not found at: $PROJECT"
+  echo "Set SSHFS_CONTROL_HOME or place the repo at: $DEFAULT_PROJECT"
+  exit 1
+fi
+
+COMMAND="${1:-help}"
+TARGET="${2:-web}"
+
+case "$COMMAND" in
+  help|-h|--help) usage ;;
+  list|list-targets) make -C "$PROJECT" --no-print-directory list-targets ;;
+  doctor) make -C "$PROJECT" --no-print-directory doctor ;;
+  config|print-config) make -C "$PROJECT" --no-print-directory print-config TARGET="$TARGET" ;;
+  mount|unmount|remount|status|ls) make -C "$PROJECT" --no-print-directory "$COMMAND" TARGET="$TARGET" ;;
+  *)
+    echo "Unknown command: $COMMAND"
+    echo ""
+    usage
+    exit 1
+    ;;
+esac
